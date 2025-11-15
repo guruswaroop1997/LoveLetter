@@ -1,11 +1,363 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Redirecting…</title>
-  <meta http-equiv="refresh" content="0; url=/LoveSurprise/client/index.html">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Surprise</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #AAC4F5;
+            font-family: 'Georgia', serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .page {
+            display: none;
+            width: 100%;
+            max-width: 600px;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .page.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Gift Box Styles */
+        .gift-container {
+            text-align: center;
+        }
+
+        .gift-box {
+            width: 280px;
+            height: 280px;
+            margin: 0 auto 40px;
+            animation: float 3s ease-in-out infinite;
+            cursor: pointer;
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        .gift-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 15px 40px rgba(0,0,0,0.3));
+        }
+
+        .gift-box:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .glow {
+            position: absolute;
+            inset: -20px;
+            background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .click-button {
+            padding: 16px 48px;
+            background: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            color: #c9184a;
+        }
+
+        .click-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        /* Letter Styles */
+        .letter {
+            background: white;
+            border: 5px solid black;
+            padding: 40px;
+            max-width: 550px;
+            width: 100%;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+            animation: unfold 0.8s ease-out;
+        }
+
+        @keyframes unfold {
+            from { transform: scaleY(0.1) rotateX(90deg); opacity: 0; }
+            to { transform: scaleY(1) rotateX(0deg); opacity: 1; }
+        }
+
+        .letter h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 32px;
+            color: #c9184a;
+            font-family: 'Brush Script MT', cursive;
+        }
+
+        .letter-content {
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-size: 18px;
+            text-align: justify;
+            color: #333;
+        }
+
+        .signature {
+            text-align: right;
+            font-style: italic;
+            margin-top: 40px;
+            font-size: 20px;
+            color: #555;
+        }
+
+        .continue-btn {
+            display: block;
+            margin: 30px auto 0;
+            padding: 14px 40px;
+            background: #c9184a;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .continue-btn:hover {
+            background: #a01543;
+            transform: scale(1.05);
+        }
+
+        /* Proposal Styles */
+        .proposal-container {
+            text-align: center;
+            width: 100%;
+        }
+
+        .proposal-title {
+            font-size: 52px;
+            color: #808080;
+            margin-bottom: 60px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            font-weight: bold;
+        }
+
+        .button-container {
+            position: relative;
+            height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .proposal-btn {
+            padding: 22px 60px;
+            font-size: 28px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+            font-weight: bold;
+        }
+
+        .yes-btn {
+            background: #06d6a0;
+            color: white;
+            position: relative;
+        }
+
+        .yes-btn:hover {
+            background: #05b886;
+            transform: scale(1.15);
+        }
+
+        .no-btn {
+            background: #ef476f;
+            color: white;
+            position: relative;
+        }
+
+        .no-btn:hover {
+            background: #d63a5e;
+        }
+
+        /* Thank You Styles */
+        .thank-you {
+            text-align: center;
+        }
+
+        .thank-you h1 {
+            font-size: 48px;
+            color: #c9184a;
+            margin-bottom: 40px;
+            animation: bounce 1s ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hearts {
+            font-size: 80px;
+            margin: 20px 0;
+            animation: heartPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .celebration-message {
+            font-size: 24px;
+            color: #555;
+            margin-top: 30px;
+            line-height: 1.6;
+        }
+    </style>
 </head>
 <body>
-  <p>If you are not redirected automatically, <a href="/LoveSurprise/client/index.html">click here</a>.</p>
+    <!-- Page 1: Gift Box -->
+    <div class="page active" id="giftPage">
+        <div class="gift-container">
+            <div class="gift-box" onclick="openGift()">
+                <div class="glow"></div>
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cdefs%3E%3ClinearGradient id='boxGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23ff7aa3;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23ff6b9d;stop-opacity:1' /%3E%3C/linearGradient%3E%3CradialGradient id='shine'%3E%3Cstop offset='0%25' style='stop-color:%23ffffff;stop-opacity:0.6' /%3E%3Cstop offset='100%25' style='stop-color:%23ffffff;stop-opacity:0' /%3E%3C/radialGradient%3E%3C/defs%3E%3Crect x='50' y='50' width='300' height='300' rx='20' fill='url(%23boxGrad)'/%3E%3Cellipse cx='250' cy='100' rx='100' ry='100' fill='url(%23shine)'/%3E%3Crect x='50' y='175' width='300' height='50' fill='%23ffb3d1' opacity='0.7'/%3E%3Crect x='175' y='50' width='50' height='300' fill='%23ffb3d1' opacity='0.7'/%3E%3Cg transform='translate(200,200)'%3E%3Crect x='-40' y='-50' width='80' height='100' rx='10' fill='none' stroke='white' stroke-width='8'/%3E%3Cline x1='0' y1='-50' x2='0' y2='50' stroke='white' stroke-width='8'/%3E%3Cline x1='-40' y1='0' x2='40' y2='0' stroke='white' stroke-width='8'/%3E%3Cellipse cx='-25' cy='-65' rx='20' ry='25' fill='white'/%3E%3Cellipse cx='25' cy='-65' rx='20' ry='25' fill='white'/%3E%3Cpath d='M -45,-65 Q -25,-85 0,-70 Q 25,-85 45,-65' fill='white'/%3E%3C/g%3E%3C/svg%3E" alt="Gift Box">
+            </div>
+            <button class="click-button" onclick="openGift()">Click Here to Open</button>
+        </div>
+    </div>
+
+    <!-- Page 2: Letter -->
+    <div class="page" id="letterPage">
+        <div class="letter">
+            <h1>My Dear Bujjamma</h1>
+            <div class="letter-content">
+                <p>Parichayam aina kothalo tinu naku set avvudda leda aney doubt vachindi... Instagram lo start aina conversation nemmadiga friends laga marinappudu parledu idi ekkadi varaku veltundo chuddam ani anukunna... But time gadchey koddi nuvvu lekuna undadam kastam emo aney bhavaana Vachindi.</p>
+                <br>
+                <p>Asalu Pelli Cheskovaddu anukunna naku eppudu nachavo ela nachavo telidu... Ninnu istapadadam start chesa.... Ah istam prema laga eppudu marindo telidu... Ah prema na pranam kantey ekkuvaga eppudu marindo telidu... Ah prema lekapotey bratakalenu aney bhavana eppudu modali aindo telidu... Niku baga alavatu padipoya Bujjamma...</p>
+                <br>
+                <p>Nitho life long gadipedddam ani fix ayya. Nuvve naku manchi Partner aney feeling ki vachesa... Intaka mundu ni life ela undo telidu....ika meeda natho undey ni life ni beautiful ga marchali ani nenu anukuntunna... Kastam aina nastam aina... Sukham aina santosham aina... Badha Aina prema aina edaina nithone ani fix ayya.</p>
+                <br>
+                <p>I love you truly from the Deepest of my heart and will try to be a good human beging with you...</p>
+            </div>
+            <div class="signature">
+                Yours lovingly...<br>
+                Guru Swaroop
+            </div>
+            <button class="continue-btn" onclick="showProposal()">Continue</button>
+        </div>
+    </div>
+
+    <!-- Page 3: Proposal -->
+    <div class="page" id="proposalPage">
+        <div class="proposal-container">
+            <h1 class="proposal-title">Will You Marry Me?</h1>
+            <div class="button-container">
+                <button class="proposal-btn yes-btn" onclick="acceptProposal()">Yes! 💕</button>
+                <button class="proposal-btn no-btn" id="noBtn" onclick="moveNoButton(event)">No</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 4: Thank You -->
+    <div class="page" id="thankYouPage">
+        <div class="thank-you">
+            <div class="hearts">❤️ 💕 ❤️</div>
+            <h1>Thanks for accepting me....</h1>
+            <p class="celebration-message">
+                You've made me the happiest person in the world!<br>
+                I promise to love you, cherish you, and make you smile every single day.
+            </p>
+            <div class="hearts">💖 💗 💖</div>
+        </div>
+    </div>
+
+    <script>
+        function openGift() {
+            transitionPage('giftPage', 'letterPage');
+        }
+
+        function showProposal() {
+            transitionPage('letterPage', 'proposalPage');
+        }
+
+        function moveNoButton(event) {
+            event.preventDefault();
+            const noBtn = document.getElementById('noBtn');
+            const container = document.querySelector('.button-container');
+            
+            const containerRect = container.getBoundingClientRect();
+            const btnWidth = noBtn.offsetWidth;
+            const btnHeight = noBtn.offsetHeight;
+            
+            const maxX = containerRect.width - btnWidth - 20;
+            const maxY = containerRect.height - btnHeight - 20;
+            
+            let randomX, randomY;
+            do {
+                randomX = Math.random() * maxX;
+                randomY = Math.random() * maxY;
+            } while (Math.abs(randomX - containerRect.width/2) < 100);
+            
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+
+        function acceptProposal() {
+            transitionPage('proposalPage', 'thankYouPage');
+        }
+
+        function transitionPage(fromId, toId) {
+            const fromPage = document.getElementById(fromId);
+            const toPage = document.getElementById(toId);
+            
+            fromPage.style.opacity = '0';
+            
+            setTimeout(() => {
+                fromPage.classList.remove('active');
+                toPage.classList.add('active');
+                toPage.style.opacity = '1';
+            }, 800);
+        }
+    </script>
 </body>
 </html>
